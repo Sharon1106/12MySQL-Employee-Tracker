@@ -1,0 +1,26 @@
+{
+  "name": "12mysql-employee-tracker",
+  "version": "1.0.0",
+  "description": "## Description ``` As a business owner I want to be able to view and manage the departments, roles, and employees in my company So that I can organize and plan my business ```",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sharon1106/12MySQL-Employee-Tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sharon1106/12MySQL-Employee-Tracker/issues"
+  },
+  "homepage": "https://github.com/Sharon1106/12MySQL-Employee-Tracker#readme",
+  "devDependencies": {
+    "fs": "0.0.1-security",
+    "inquirer": "^8.0.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.2.5"
+  }
+}
