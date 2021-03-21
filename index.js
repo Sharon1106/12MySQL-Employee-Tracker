@@ -20,6 +20,7 @@
 
 // Inquirer Prompts//
 // ?What would you like to do?
+      // [choices]
 // *View all employees
 // *View all employees by department
 // *View all employees by manager
@@ -40,6 +41,7 @@
 // (if)
 // *View all employees by department*
 // ?Which department would you like to see employees for?
+      // [choices]
 // *Engineering
 // *Finance
 // *Legal
@@ -50,6 +52,7 @@
 
 // *View all employees by manager*
 // ?Which employee do you want to see direct reports for?
+      // [choices]
 // *manager 
 // *manager
 // *manager
@@ -63,8 +66,11 @@
 // (if)
 // *Add employee
 // ?What is the employees first name?
+      // [input]
 // ?what is the employees last name?
+      // [input]
 // ?What is the employees role?
+      // [choices]
 // *sales lead
 // *salesperson
 // *lead engineer
@@ -75,6 +81,7 @@
 // *lawyer
 //when chosen
 // ?Who is the employees manager?
+      // [choices]
 // *manager 
 // *manager
 // *manager
@@ -84,8 +91,11 @@
 // (if)
 // *remove employee
 // ?What is the employees first name?
+      // [input]
 // ?what is the employees last name?
+      // [input]
 // ?What is the employees role?
+      // [choices]
 // *sales lead
 // *salesperson
 // *lead engineer
@@ -96,6 +106,7 @@
 // *lawyer
 //when chosen
 // ?Who is the employees manager?
+      // [choices]
 // *manager 
 // *manager
 // *manager
@@ -107,10 +118,12 @@
 // (if)
 // *Update Employee's role
 // ?which employees role do you want to update?
+      // [choices]
 // *Employee
 // *Employee
 // (etc)
 // ?Which role do you want to assign the selected employee?
+      // [choices]
 // *sales lead
 // *salesperson
 // *lead engineer
@@ -125,10 +138,12 @@
 // (if)
 // *Update employee manager
 // ?which employees manager do you want to update?
+      // [choices]
 // *Employee
 // *Employee
 // (etc)
 // ?Which manager do you want to assign the selected employee?
+      // [choices]
 // *Manager 
 // *manager 
 // *etc
@@ -137,6 +152,7 @@
 // (if)
 // *View all roles*
 // ?Which role do you want to see direct reports for?
+      // [choices]
 // *sales lead
 // *salesperson
 // *lead engineer
@@ -151,12 +167,16 @@
 // (if)
 // *Add role 
 // // ?Which role do you want to add?
+      // [input]
 // ?What is the yearly salary for this role?
+      // [input]
 // ?What department is this new role under?
+      // [input]
 // // message/Successfully Updated roles/message//
 
 
 // ?Which role do you want to remove (warning: this will also remove employees)?
+      // [choices]
 // *sales lead
 // *salesperson
 // *lead engineer
