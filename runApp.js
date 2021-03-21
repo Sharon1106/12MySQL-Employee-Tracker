@@ -1,4 +1,4 @@
-// 3 different tables department/ role/ employee 
+// 3 different tables department/ role/ employee/DONE
 // use join to retrive information from javasript and database 
 //inquirer for questions/
 //get values 
@@ -49,7 +49,7 @@
 //grab and diplay/
 //id/ first_name/ last_name/ title/
 
-
+// (if)
 // *View all employees by manager*
 // ?Which employee do you want to see direct reports for?
       // [choices]
