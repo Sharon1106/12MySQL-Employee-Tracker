@@ -1,6 +1,17 @@
+//dependancies required to start running app
+const connection = require('./db/connection');
+const questions = require('./db/questions');
+const inquirer = require('inquirer');
+
+
+//NOT SURE HOW TO USE...
+// const table = require('console.table');
+
+
+
 // 3 different tables department/ role/ employee/DONE
+//inquirer for questions/IN PROGRESS/
 // use join to retrive information from javasript and database 
-//inquirer for questions/
 //get values 
 //Mysql 
 //run myql statements
@@ -13,7 +24,7 @@
 // department, roles, employees 
 //3rd//
 //Update/
-//employee roles
+//department, roles, employees
 //4st//
 //Delete (optional)/
 
