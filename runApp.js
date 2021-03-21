@@ -3,18 +3,19 @@ const connection = require('./db/connection');
 const questions = require('./db/questions');
 const inquirer = require('inquirer');
 
-
 //NOT SURE HOW TO USE...
 // const table = require('console.table');
 
 
-
+// --------------------------------------------------------
 // 3 different tables department/ role/ employee/DONE
 //inquirer for questions/IN PROGRESS/
 // use join to retrive information from javasript and database 
 //get values 
 //Mysql 
-//run myql statements
+//run myql statements 
+// !!use mysql workbench to test sql statement before writing in javascript!!
+
 
 //1st//
 //Create 
@@ -58,7 +59,7 @@ const inquirer = require('inquirer');
 // *Legal
 // *Sales
 //grab and diplay/
-//id/ first_name/ last_name/ title/
+//id/ first_name/ last_name/role/ department
 
 // (if)
 // *View all employees by manager*
@@ -69,7 +70,7 @@ const inquirer = require('inquirer');
 // *manager
 // (etc)
 //grab and display/
-//id/ first_name/ last_name/ title/ department/ salary/ manager/ 
+//id/ first_name/ last_name/role/ manager/ 
 // (if)
 // no employee exists...
 //message/ the selected employee has no direct reports/message//
