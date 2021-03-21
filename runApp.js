@@ -59,7 +59,7 @@ const inquirer = require('inquirer');
 // *Legal
 // *Sales
 //grab and diplay/
-//id/ first_name/ last_name/role/ department
+//id/ first_name/ last_name/department
 
 // (if)
 // *View all employees by manager*
@@ -70,7 +70,7 @@ const inquirer = require('inquirer');
 // *manager
 // (etc)
 //grab and display/
-//id/ first_name/ last_name/role/ manager/ 
+//id/ first_name/ last_name/ manager/ 
 // (if)
 // no employee exists...
 //message/ the selected employee has no direct reports/message//
@@ -163,18 +163,8 @@ const inquirer = require('inquirer');
 
 // (if)
 // *View all roles*
-// ?Which role do you want to see direct reports for?
-      // [choices]
-// *sales lead
-// *salesperson
-// *lead engineer
-// *Software engineer
-// *account manager
-// *accountant
-// *legal team lead
-// *lawyer
-//grab and display/
-//id/ first_name/ last_name/ role/ department/ salary/ manager/
+//grab and display
+//id/ role
 
 // (if)
 // *Add role 
