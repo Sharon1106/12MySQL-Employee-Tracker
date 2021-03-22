@@ -1,7 +1,7 @@
 // export to use elsewhere
 module.exports = {
   //initial prompt
-  firstPrompt: {
+  startPrompt: {
     name: 'start',
     type: "list",
     message: "What would you like to do?",
@@ -17,7 +17,6 @@ module.exports = {
       "Add role",
       "remove role",
       "Quit"
-    ]
-    
-  }
+    ],
+  },
 };

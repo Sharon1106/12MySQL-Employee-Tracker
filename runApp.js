@@ -3,13 +3,66 @@ const questions = require('./db/questions');
 const inquirer = require('inquirer');
 //NOT SURE HOW TO USE...
 const table = require('console.table');
-const { firstPrompt } = require('./db/questions');
+// const { startPrompt } = require('./db/questions');
 
-console.log(`Hello, welcome to your employee tracker. Choose one of the options below to begin.`)
+console.log("Hello, welcome to your employee tracker! Please choose one of the options below to begin.");
 
 //When ran 
-firstPrompt
+startPrompt();
 
+function startPrompt() {
+      //when start prompt is ran run inquirer then start
+      inquirer.prompt(prompt.startPrompt).then(function ({ start }) {
+            // switch statement to select one of many code blocks to be executed.
+      switch (start) {
+            // when view all employees 
+            case "View all employees":
+                  viewEmployees();
+              break;
+
+            case "View all employees by department":
+                  viewDepartmentE();
+              break;
+
+            case "View all employees by manager":
+                  viewManagerE();
+              break;
+              
+            case "Add employee":
+                  addEmployee();
+              break;
+
+            case "Remove employee":
+                  removeEmployee();
+              break;
+
+            case "Update employee role":
+                  updateEmployeeRole();
+              break;
+
+            case "Update employee manager":
+                  updateEmployeeManager();
+              break;
+
+            case "View all roles":
+                  viewRoles();
+              break;
+
+            case "Add role":
+                  addRole();
+              break;
+
+            case "remove role":
+                  removeRole();
+              break;
+
+            case "Quit":
+                 console.log("Goodbye!");
+                 //end node app/ how?
+            break;
+          }
+      });
+}
 
 // --------------------------------------------------------
 // 3 different tables department/ role/ employee/DONE
@@ -20,12 +73,10 @@ firstPrompt
 // FROM Orders
 // INNER JOIN Customers
 // ON Orders.CustomerID=Customers.CustomerID;
-
 //get values 
 //Mysql 
 //run myql statements 
 // !!use mysql workbench to test sql statement before writing in javascript!!
-
 //1st//
 //Create 
 // add department, roles, employees 
@@ -38,28 +89,14 @@ firstPrompt
 //4st//
 //Delete (optional)/
 
-
-// Inquirer Prompts//
-// ?What would you like to do?
-      // [choices]
-// *View all employees
-// *View all employees by department
-// *View all employees by manager
-// *Add employee
-// *Remove employee
-// *Update employee role
-// *Update employee manager
-// *View all roles
-// *Add role 
-// *remove role 
-// *Quit 
-
 // (if)
+// viewEmployees();
 // *View all employees*
 //grab and display/ 
 //id/ first_name/ last_name/ role/ department/ salary/ manager/ 
 
 // (if)
+ //viewDepartmentE();
 // *View all employees by department*
 // ?Which department would you like to see employees for?
       // [choices]
@@ -71,6 +108,7 @@ firstPrompt
 //id/ first_name/ last_name/department
 
 // (if)
+ //viewManagerE();
 // *View all employees by manager*
 // ?Which employee do you want to see direct reports for?
       // [choices]
@@ -85,6 +123,7 @@ firstPrompt
 //message/ the selected employee has no direct reports/message//
 
 // (if)
+//addEmployee();
 // *Add employee
 // ?What is the employees first name?
       // [input]
@@ -110,6 +149,7 @@ firstPrompt
 //message/ succesfully added (First name) (last name) to the database/message//
 
 // (if)
+//removeEmployee();
 // *remove employee
 // ?What is the employees first name?
       // [input]
@@ -138,6 +178,7 @@ firstPrompt
 
 // (if)
 // *Update Employee's role
+//updateEmployee();
 // ?which employees role do you want to update?
       // [choices]
 // *Employee
@@ -157,6 +198,7 @@ firstPrompt
 
 
 // (if)
+ //updateManager();
 // *Update employee manager
 // ?which employees manager do you want to update?
       // [choices]
@@ -171,11 +213,13 @@ firstPrompt
 // // message/Successfully Updated employees manager/message//
 
 // (if)
+ //viewRoles();
 // *View all roles*
 //grab and display
 //id/ role
 
 // (if)
+  //addRole();
 // *Add role 
 // // ?Which role do you want to add?
       // [input]
@@ -185,7 +229,8 @@ firstPrompt
       // [input]
 // // message/Successfully Updated roles/message//
 
-
+// (if)
+ //removeRole();
 // ?Which role do you want to remove (warning: this will also remove employees)?
       // [choices]
 // *sales lead
