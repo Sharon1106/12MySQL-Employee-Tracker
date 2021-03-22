@@ -2,15 +2,26 @@
 const connection = require('./db/connection');
 const questions = require('./db/questions');
 const inquirer = require('inquirer');
-
 //NOT SURE HOW TO USE...
-// const table = require('console.table');
+const table = require('console.table');
+const { firstPrompt } = require('./db/questions');
+
+console.log(`Hello, welcome to your employee tracker. Choose one of the options below to begin.`)
+
+//When ran 
+firstPrompt
 
 
 // --------------------------------------------------------
 // 3 different tables department/ role/ employee/DONE
 //inquirer for questions/IN PROGRESS/
 // use join to retrive information from javasript and database 
+                        // /EXAMPLE//
+// SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate
+// FROM Orders
+// INNER JOIN Customers
+// ON Orders.CustomerID=Customers.CustomerID;
+
 //get values 
 //Mysql 
 //run myql statements 
