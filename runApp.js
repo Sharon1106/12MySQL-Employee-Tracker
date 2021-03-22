@@ -1,4 +1,3 @@
-//dependancies required to start running app
 const connection = require('./db/connection');
 const questions = require('./db/questions');
 const inquirer = require('inquirer');
@@ -26,7 +25,6 @@ firstPrompt
 //Mysql 
 //run myql statements 
 // !!use mysql workbench to test sql statement before writing in javascript!!
-
 
 //1st//
 //Create 

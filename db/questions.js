@@ -2,7 +2,6 @@
 module.exports = {
   //initial prompt
   firstPrompt: {
-
     name: 'start',
     type: "list",
     message: "What would you like to do?",
