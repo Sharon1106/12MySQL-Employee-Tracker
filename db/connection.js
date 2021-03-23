@@ -13,13 +13,7 @@ var connection = mysql.createConnection({
 //catches errors
 connection.connect((err) => {
   if (err) throw err;
-<<<<<<< HEAD
-});console.log("You're successfully connected!")
-
-module.exports = connection;
-=======
   //else
 });console.log("You are connected!")
-//export
+
 module.exports = connection;
->>>>>>> a5de6c243b73c35b566ed7ba4865687ffd0566fc
