@@ -1,4 +1,4 @@
-//import
+//require mysql for db
 const mysql = require('mysql');
 
 var connection = mysql.createConnection({
@@ -13,7 +13,6 @@ var connection = mysql.createConnection({
 //catches errors
 connection.connect((err) => {
   if (err) throw err;
-  //else
 });console.log("You're successfully connected!")
-//export
+
 module.exports = connection;
