@@ -13,7 +13,7 @@ var connection = mysql.createConnection({
 //catches errors
 connection.connect((err) => {
   if (err) throw err;
-  //else
-});console.log("You are connected!")
+  console.log("You are connected!")
+});startPrompt();
 
 module.exports = connection;

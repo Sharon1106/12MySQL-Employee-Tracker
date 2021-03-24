@@ -3,65 +3,82 @@ const questions = require('./db/questions');
 const inquirer = require('inquirer');
 //NOT SURE HOW TO USE...
 const table = require('console.table');
-// const { startPrompt } = require('./db/questions');
 
 console.log("Hello, welcome to your employee tracker! Please choose one of the options below to begin.");
 
-//When ran 
 startPrompt();
-
 function startPrompt() {
-      //when start prompt is ran run inquirer then start
-      inquirer.prompt(prompt.startPrompt).then(function ({ start }) {
-            // switch statement to select one of many code blocks to be executed.
-      switch (start) {
-            // when view all employees 
-            case "View all employees":
-                  viewEmployees();
-              break;
+   inquirer 
+   .prompt ([
+    {
+      name: 'start',
+      type: "list",
+      message: "What would you like to do?",
+      choices:[ 
+        "View all employees",
+        "View all employees by department",
+        "View all employees by manager",
+        "Add employee",
+        "Remove employee",
+        "Update employee role",
+        "Update employee manager",
+        "View all roles",
+        "Add role",
+        "remove role",
+        "Quit"
+      ]  
+    } 
+  ])
+  .then ((res) => {
+      // switch statement to select one of many code blocks to be executed.
+      switch (res.start) {
+      // when view all employees 
+       case "View all employees":
+       viewEmployees();
+       break;
 
-            case "View all employees by department":
-                  viewDepartmentE();
-              break;
+       case "View all employees by department":
+       viewDepartmentE();
+       break;
 
-            case "View all employees by manager":
-                  viewManagerE();
-              break;
-              
-            case "Add employee":
-                  addEmployee();
-              break;
+       case "View all employees by manager":
+       viewManagerE();
+       break;
 
-            case "Remove employee":
-                  removeEmployee();
-              break;
+       case "Add employee":
+       addEmployee();
+       break;
 
-            case "Update employee role":
-                  updateEmployeeRole();
-              break;
+       case "Remove employee":
+       removeEmployee();
+       break;
 
-            case "Update employee manager":
-                  updateEmployeeManager();
-              break;
+       case "Update employee role":
+       updateEmployeeRole();
+       break;
 
-            case "View all roles":
-                  viewRoles();
-              break;
+       case "Update employee manager":
+       updateEmployeeManager();
+       break;
 
-            case "Add role":
-                  addRole();
-              break;
+       case "View all roles":
+       viewRoles();
+       break;
 
-            case "remove role":
-                  removeRole();
-              break;
+       case "Add role":
+       addRole();
+       break;
 
-            case "Quit":
-                 console.log("Goodbye!");
-                 //end node app/ how?
-            break;
-          }
-      });
+       case "remove role":
+       removeRole();
+       break;
+
+       case "Quit":
+       console.log("Goodbye!");
+       connection.end();
+       break;
+      }
+  })
 }
 
 // --------------------------------------------------------
