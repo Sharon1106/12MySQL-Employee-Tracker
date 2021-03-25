@@ -1,11 +1,8 @@
 const connection = require('./db/connection');
-const questions = require('./db/questions');
-const inquirer = require('inquirer');
-//NOT SURE HOW TO USE...
 const table = require('console.table');
+const inquirer = require('inquirer');
 
 console.log("Hello, welcome to your employee tracker! Please choose one of the options below to begin.");
-
 startPrompt();
 function startPrompt() {
    inquirer 
@@ -81,36 +78,36 @@ function startPrompt() {
   })
 }
 
-// --------------------------------------------------------
-// 3 different tables department/ role/ employee/DONE
-//inquirer for questions/IN PROGRESS/
-// use join to retrive information from javasript and database 
                         // /EXAMPLE//
 // SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate
 // FROM Orders
 // INNER JOIN Customers
 // ON Orders.CustomerID=Customers.CustomerID;
-//get values 
-//Mysql 
-//run myql statements 
 // !!use mysql workbench to test sql statement before writing in javascript!!
-//1st//
-//Create 
-// add department, roles, employees 
-//2nd//
-// Read/
-// department, roles, employees 
-//3rd//
-//Update/
-//department, roles, employees
-//4st//
-//Delete (optional)/
 
 // (if)
 // viewEmployees();
-// *View all employees*
-//grab and display/ 
-//id/ first_name/ last_name/ role/ department/ salary/ manager/ 
+function viewEmployees() {
+      console.log("Viewing all employees:\n");
+      // *View all employees*
+      //grab and display//id/ first_name/ last_name/ role/ department/ salary/ manager/ 
+      var query = `
+      SELECT e.id, e.first_name, e.last_name, r.title, d.name AS department, r.salary, CONCAT(m.first_name, ' ', m.last_name) AS manager
+      FROM employee e
+      LEFT JOIN roles r
+      ON e.role_id = r.id
+      LEFT JOIN department d
+      ON d.id = r.department_id
+      LEFT JOIN employee m
+      ON m.id = e.manager_id`
+
+      connection.query(query, function (err, res) {
+            if(err) throw err;
+            console.table(res);
+            console.log("\n---------------------------------------------------");
+            startPrompt();
+      });
+}
 
 // (if)
  //viewDepartmentE();

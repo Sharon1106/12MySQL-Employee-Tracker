@@ -6,7 +6,7 @@ var connection = mysql.createConnection({
   port     : '3306',
   user     : 'root',
   password : 'yourRootPassword',
-  //employeeSchema
+  //employeesSchema
   database: 'employees_DB'
 });
 
@@ -14,6 +14,5 @@ var connection = mysql.createConnection({
 connection.connect((err) => {
   if (err) throw err;
   console.log("You are connected!")
-});startPrompt();
-
+});
 module.exports = connection;
