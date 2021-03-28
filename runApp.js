@@ -2,8 +2,10 @@ const connection = require('./db/connection');
 const table = require('console.table');
 const inquirer = require('inquirer');
 
-console.log("Hello, welcome to your employee tracker! Please choose one of the options below to begin.");
 startPrompt();
+
+console.log("Hello, welcome to your employee tracker! Please choose one of the options below to begin.");
+
 function startPrompt() {
    inquirer 
    .prompt ([
@@ -14,14 +16,12 @@ function startPrompt() {
       choices:[ 
         "View all employees",
         "View all employees by department",
-        "View all employees by manager",
         "Add employee",
         "Remove employee",
+        "View All Roles",
         "Update employee role",
-        "Update employee manager",
-        "View all roles",
         "Add role",
-        "remove role",
+        "Remove role",
         "Quit"
       ]  
     } 
@@ -38,10 +38,6 @@ function startPrompt() {
        viewDepartmentE();
        break;
 
-       case "View all employees by manager":
-       viewManagerE();
-       break;
-
        case "Add employee":
        addEmployee();
        break;
@@ -50,16 +46,12 @@ function startPrompt() {
        removeEmployee();
        break;
 
-       case "Update employee role":
-       updateEmployeeRole();
-       break;
-
-       case "Update employee manager":
-       updateEmployeeManager();
-       break;
-
        case "View all roles":
        viewRoles();
+       break;
+
+       case "Update employee role":
+       updateEmployeeRole();
        break;
 
        case "Add role":
@@ -75,19 +67,12 @@ function startPrompt() {
        connection.end();
        break;
       }
-  })
+  });
 }
 
-                        // /EXAMPLE//
-// SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate
-// FROM Orders
-// INNER JOIN Customers
-// ON Orders.CustomerID=Customers.CustomerID;
-// !!use mysql workbench to test sql statement before writing in javascript!!
-
-// (if)
+      // (if)
 // viewEmployees();
-function viewEmployees() {
+function viewEmployees () {
       console.log("Viewing all employees:\n");
       // *View all employees*
       //grab and display//id/ first_name/ last_name/ role/ department/ salary/ manager/ 
@@ -101,94 +86,229 @@ function viewEmployees() {
       LEFT JOIN employee m
       ON m.id = e.manager_id`
 
-      connection.query(query, function (err, res) {
-            if(err) throw err;
+      connection.query(query, (err, res) => {
+            if (err) throw err;
             console.table(res);
-            console.log("\n---------------------------------------------------");
+            console.log("\n-------------------Viewed-All-Employees--------------------------------");
             startPrompt();
       });
 }
 
-// (if)
+      // (if)
  //viewDepartmentE();
-// *View all employees by department*
-// ?Which department would you like to see employees for?
-      // [choices]
-// *Engineering
-// *Finance
-// *Legal
-// *Sales
-//grab and diplay/
-//id/ first_name/ last_name/department
+function viewDepartmentE() {
+      var query = `
+      SELECT d.id, d.name, r.salary AS budget
+      FROM employee e
+      LEFT JOIN roles r
+      ON e.role_id = r.id
+      LEFT JOIN department d
+      ON d.id = r.department_id
+      GROUP BY d.id, d.name`
 
-// (if)
- //viewManagerE();
-// *View all employees by manager*
-// ?Which employee do you want to see direct reports for?
-      // [choices]
-// *manager 
-// *manager
-// *manager
-// (etc)
-//grab and display/
-//id/ first_name/ last_name/ manager/ 
-// (if)
-// no employee exists...
-//message/ the selected employee has no direct reports/message//
+      connection.query(query, (err, res) => {
+            if (err) throw err;
+
+            const departmentChoices = res.map(data => ({
+             value: data.id,
+             name: data.name
+            }));
+
+            console.table(res);
+            console.log("\n------------------View-By-Department---------------------------------");
+            
+            departmentPrompt(departmentChoices);
+      });
+}
+
+// ?Which department would you like to see employees for?
+function departmentPrompt(departmentChoices) {
+    inquirer 
+      .prompt ([
+       {
+         name: 'departmentId',
+         type: "list",
+         message: "Which department would you like to see employees for?",
+         choices: departmentChoices
+       } 
+     ])
+     .then ((answer) => {
+            console.log(answer.departmentId);
+                //grab and diplay/
+            //id/ first_name/ last_name/department
+            var query = `
+            SELECT e.id, e.first_name, e.last_name, d.name AS department 
+            FROM employee e
+            LEFT JOIN roles r
+            ON e.role_id = r.id
+            LEFT JOIN department d
+            ON d.id = r.department_id
+            WHERE d.id = ?`;
+            
+            connection.query(query, answer.departmentId, (err, res) => {
+            if (err) throw err;
+                              
+             console.table("Department employees", res);
+             console.log("\n-------------------Viewed-All-Employees-By-Department------------------------------");
+
+             startPrompt();
+            });
+
+     });
+}
 
 // (if)
 //addEmployee();
 // *Add employee
-// ?What is the employees first name?
-      // [input]
-// ?what is the employees last name?
-      // [input]
-// ?What is the employees role?
-      // [choices]
-// *sales lead
-// *salesperson
-// *lead engineer
-// *Software engineer
-// *account manager
-// *accountant
-// *legal team lead
-// *lawyer
-//when chosen
-// ?Who is the employees manager?
-      // [choices]
-// *manager 
-// *manager
-// *manager
-// (etc)
-//message/ succesfully added (First name) (last name) to the database/message//
+function addEmployee() {
+      var query = ` SELECT r.id, r.title, r.salary
+      FROM roles r`
+
+      connection.query(query, (err, res) => {
+            if (err) throw err;
+
+            const employeeRoleChoices = res.map(({id, title, salary}) => ({
+             value: id, 
+             title:`${title}`, 
+             salary: `${salary}`
+            }));
+
+            console.table(res);
+            console.log("\n------------------Add--------------------------------");
+            
+            addEmployeePrompt(employeeRoleChoices);
+      });
+}
+
+function addEmployeePrompt (employeeRoleChoices) {
+      inquirer 
+        .prompt ([
+         {
+           name: 'first_name',
+           type: 'input',
+           message: "What is the employees first name?",
+         },
+         {
+            name: 'last_name',
+            type: 'input',
+            message: "what is the employees last name?",
+          },
+          {
+            name: 'manager_id',
+            type: "list",
+            message: "What is the employees role?",
+            choices: employeeRoleChoices
+          } 
+       ])
+
+       .then ((answer) => {
+              console.log(answer);
+  
+              var query = `INSERT INTO employee SET ?`
+              
+              connection.query(query, 
+                  {
+                    first_name: answer.first_name,
+                    last_name: answer.last_name,
+                    role_id: answer.role_id,
+                    manager_id: answer.managerId,
+                  },
+                  (err, res) => {
+                   if (err) throw (err);
+
+                   console.table(res);
+                   console.log(res.insertedRows + "\n-------------------Added-New-Employee------------------------------");
+                   viewEmployees();
+                  }                                      
+            );
+       });
+}
 
 // (if)
 //removeEmployee();
-// *remove employee
-// ?What is the employees first name?
-      // [input]
-// ?what is the employees last name?
-      // [input]
-// ?What is the employees role?
-      // [choices]
-// *sales lead
-// *salesperson
-// *lead engineer
-// *Software engineer
-// *account manager
-// *accountant
-// *legal team lead
-// *lawyer
-//when chosen
-// ?Who is the employees manager?
-      // [choices]
-// *manager 
-// *manager
-// *manager
-// (etc)
-//message/ succesfully removed (First name) (last name) to the database/message//
+function removeEmployee() {
+      var query = `SELECT e.id, e.first_name, e.last_name 
+      FROM employee e`
+
+      connection.query(query, (err, res) => {
+             if (err) throw err;
+                      
+            const removeEmployeeChoices = res.map(({ id, first_name, last_name }) => ({
+                  value: id, name: `${id} ${first_name} ${last_name}`
+            }));
+            console.table(res);
+            console.log("Choices");
+
+            removeEmployeePrompt(removeEmployeeChoices);
+
+      });
+}
+
+function removeEmployeePrompt (removeEmployeeChoices) {
+       inquirer 
+        .prompt ([
+         {
+           name: 'employeeId',
+           type: 'list',
+           message: "Which employee do you want to remove?",
+           choices: removeEmployeeChoices
+         }
+       ])
+
+       .then ((answer) => {
+              console.log(answer);
+  
+              var query = `DELETE FROM employee WHERE ?`
+              
+              connection.query(query, {id: answer.employeeId}, (err, res) => {
+            if (err)throw (err);
+
+            console.table(res);
+            console.log(res.insertedRows + "\n-------------------Removed-Employee-----------------------------");
+                  startPrompt();
+            }                                                  
+            );
+       });
+}
 
 
+// (if)
+//  viewRoles();
+function viewRoles() {
+      console.log("Viewing all roles:\n");
+      // *View all roles*
+      //id/ role
+      var query = `SELECT * FROM roles`
+
+      connection.query(query, (err, res) => {
+            if (err) throw err;
+            console.table(res);
+            
+            res.forEach((role) => {
+                  console.log(`ID: ${role.id} Role: ${role.title}\n`,
+            );
+            });
+            console.log("\n-------------------Viewed-All-Roles-------------------------------");
+            startPrompt();
+      });
+}
+
+//grab and display
+//id/ role
+
+
+
+                        // /EXAMPLE//
+            //  SELECT column_name(s)
+            // FROM table1
+            // LEFT JOIN table2
+            // ON table1.column_name = table2.column_name;
+
+      // SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate
+      // FROM Orders
+      // INNER JOIN Customers
+      // ON Orders.CustomerID=Customers.CustomerID;
+      // !!use mysql workbench to test sql statement before writing in javascript!!
 
 // (if)
 // *Update Employee's role
@@ -226,11 +346,6 @@ function viewEmployees() {
 // *etc
 // // message/Successfully Updated employees manager/message//
 
-// (if)
- //viewRoles();
-// *View all roles*
-//grab and display
-//id/ role
 
 // (if)
   //addRole();
