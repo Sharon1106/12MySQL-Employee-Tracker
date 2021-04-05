@@ -17,16 +17,16 @@ function startPrompt() {
         //VIEW    
         "View all employees",
         "View all employees by department",
-        "View All Roles",
+      //   "View All Roles",
         //ADD
         "Add employee",
         "Add department",
-        "Add role",
+      //   "Add role",
         //UPDATE
         "Update employee role",
         //REMOVE
         "Remove employee",
-        "Remove role",
+      //   "Remove role",
         "Quit"
       ]  
     } 
@@ -43,9 +43,9 @@ function startPrompt() {
             viewDepartmentE();
             break;
 
-       case "View all roles":
-            viewRoles();
-            break;
+      //  case "View all roles":
+      //       viewRoles();
+      //       break;
 
             //ADD
        case "Add employee":
@@ -56,9 +56,9 @@ function startPrompt() {
             addDepartment();
             break;
 
-       case "Add role":
-            addRole();
-            break;
+      //  case "Add role":
+      //       addRole();
+      //       break;
 
             //UPDATE
        case "Update employee role":
@@ -71,12 +71,12 @@ function startPrompt() {
             break;
 
 
-       case "remove role":
-            removeRole();
-            break;
+      //  case "remove role":
+      //       removeRole();
+      //       break;
 
        case "Quit":
-       console.log("Goodbye!");
+       console.log("----------Goodbye!");
        connection.end();
             break;
       }
@@ -282,29 +282,71 @@ function addDepartment() {
 
 
 // (if)
-  //addRole();
-  function addRole() {
-      inquirer
-       .prompt ([
-             {
-                  name: 'newRole',
-                  type: 'input',
-                  message: "Which role do you want to add?",
-             },
-             {
-                  name: 'roleSalary',
-                  type: 'input',
-                  message: "What is the yearly salary for this role?",
-             },
-             {
-                  name: 'roleDepartment',
-                  type: 'input',
-                 choices: departmentChoices,
-             },
+// //   //addRole();
+// function addRole() {
+//       var query = 
+//       `SELECT d.id, d.name, r.salary AS budget
+//       FROM employee e
+//       JOIN roles r
+//       ON e.role_id = r.id
+//       JOIN department d
+//       ON d.id = r.department_id
+//       GROUP BY d.id, d.name`;
+// }
+//       connection.query(query, (err, res) => {
+//        if (err) throw (err);
+//        const employeeDepartmentChoices = res.map(({id, name }) => ({
+//             value: id, 
+//             name:`${id} ${name}`, 
+            
+//       }));
 
-             
-       ])
-  } 
+//        console.table(res);
+//        console.log("-------------------Added-New-Role!------------------------------");
+//        promptAddRole(employeeDepartmentChoices)
+//       }                                      
+// );
+
+
+//   function promptAddRole () {
+//       inquirer
+//        .prompt ([
+//              {
+//                   name: 'newRole',
+//                   type: 'input',
+//                   message: "Which role do you want to add?",
+//              },
+//              {
+//                   name: 'roleSalary',
+//                   type: 'input',
+//                   message: "What is the yearly salary for this role?",
+//              },
+//              {
+//                   name: 'roleDepartment',
+//                   type: 'list',
+//                  choices: employeeDepartmentChoices,
+//              },
+//        ])
+//        .then ((answer) => {
+//             var query = ` INSERT INTO roles SET ?`
+//               connection.query(query, 
+//                   {
+//                         title: answer.newRole,
+//                         salary: answer.roleSalary,
+//                         department: answer.roleDepartment
+//                   },
+//                   (err, res) => {
+//                    if (err) throw (err);
+//                    console.table(res);
+//                    console.log("-------------------Added-New-Role!------------------------------");
+//                    startPrompt();
+//                   }                                      
+//             );
+//        });
+//   } 
+
+
+
 
 // // message/Successfully Updated roles/message//
 
@@ -406,10 +448,3 @@ function removeEmployeePrompt (removeEmployeeChoices) {
       // INNER JOIN Customers
       // ON Orders.CustomerID=Customers.CustomerID;
       // !!use mysql workbench to test sql statement before writing in javascript!!
-
-
-
-
-// (if)
-// quit 
-// // message/Goodbye!/message//

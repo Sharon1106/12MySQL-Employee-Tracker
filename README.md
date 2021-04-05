@@ -9,9 +9,6 @@ With this app you're are able to view and manage your department, roles and empl
 As a business owner
 I want to be able to view and manage the departments, roles, and employees in my company
 So that I can organize and plan my business
-<<<<<<< HEAD
-```
-=======
 ```
 ## Table of Contents
 
@@ -35,4 +32,3 @@ So that I can organize and plan my business
   ### Questions?
   You can visit: [GitHub](https://github.com/Sharon1106)  
   For any additional questions you can contact me at martinezsharonr@gmail.com
->>>>>>> 96427a6900c546ff29185e8619677afbbaf81e56
