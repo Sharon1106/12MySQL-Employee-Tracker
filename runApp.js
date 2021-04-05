@@ -4,9 +4,10 @@ const inquirer = require('inquirer');
 
 startPrompt();
 
-console.log("Hello, welcome to your employee tracker! Please choose one of the options below to begin.");
+
 
 function startPrompt() {
+      console.log("Hello, welcome to your employee tracker! Please choose one of the options below to begin.");
    inquirer 
    .prompt ([
     {
@@ -23,7 +24,7 @@ function startPrompt() {
         "Add department",
       //   "Add role",
         //UPDATE
-        "Update employee role",
+      //   "Update employee role",
         //REMOVE
         "Remove employee",
       //   "Remove role",
@@ -61,9 +62,9 @@ function startPrompt() {
       //       break;
 
             //UPDATE
-       case "Update employee role":
-            updateEmployeeRole();
-            break;
+      //  case "Update employee role":
+      //       updateEmployeeRole();
+      //       break;
 
             //REMOVE
        case "Remove employee":
@@ -85,7 +86,7 @@ function startPrompt() {
       // (if)
 // viewEmployees();
 function viewEmployees () {
-      console.log("Viewing all employees:\n");
+      console.log("\nViewing all employees:\n");
       var query = `
       SELECT e.id, e.first_name, e.last_name, r.title, d.name AS department, r.salary, CONCAT(m.first_name, ' ', m.last_name) AS manager
       FROM employee e
@@ -99,7 +100,7 @@ function viewEmployees () {
       connection.query(query, (err, res) => {
             if (err) throw err;
             console.table(res);
-            console.log("\n-------------------Viewed-All-Employees--------------------------------");
+            console.log("\n-------------------Viewed-All-Employees--------------------------------\n");
             startPrompt();
       });
 }
@@ -119,7 +120,7 @@ function viewDepartmentE() {
             }));
 
             console.table(res);
-            console.log("\n------------------View-By-Department---------------------------------");
+            console.log("\n------------------View-By-Department---------------------------------\n");
             
             departmentPrompt(departmentChoices);
       });
@@ -149,7 +150,7 @@ function departmentPrompt(departmentChoices) {
             if (err) throw err;
                               
              console.table("Department employees", res);
-             console.log("\n-------------------Viewed-All-Employees-By-Department------------------------------");
+             console.log("\n-------------------Viewed-All-Employees-By-Department------------------------------\n");
 
              startPrompt();
             });
@@ -173,7 +174,7 @@ function addEmployee() {
             }));
 
             console.table(res);
-            console.log("\n------------------Add-New-Employee------------------------------");
+            console.log("\n------------------Add-New-Employee------------------------------\n");
             
             addEmployeePrompt(employeeRoleChoices);
       });
@@ -215,7 +216,7 @@ function addEmployeePrompt (employeeRoleChoices) {
                    if (err) throw (err);
 
                    console.table(res);
-                   console.log(res.insertedRows + "\n-------------------Added-New-Employee!------------------------------");
+                   console.log(res.insertedRows + "\n-------------------Added-New-Employee!------------------------------\n");
                    viewEmployees();
                   }                                      
             );
@@ -241,7 +242,7 @@ function addDepartment() {
                   (err, res) => {
                    if (err) throw (err);
                    console.table(res);
-                   console.log("-------------------Added-New-Department!------------------------------");
+                   console.log("-------------------Added-New-Department!------------------------------\n");
                    startPrompt();
                   }                                      
             );
@@ -287,7 +288,7 @@ function removeEmployeePrompt (removeEmployeeChoices) {
             if (err)throw (err);
 
             console.table(res);
-            console.log(res.insertedRows + "\n-------------------Removed-Employee-----------------------------");
+            console.log(res.insertedRows + "\n-------------------Removed-Employee-----------------------------\n");
                   startPrompt();
             }                                                  
             );
