@@ -70,7 +70,6 @@ function startPrompt() {
             removeEmployee();
             break;
 
-
       //  case "remove role":
       //       removeRole();
       //       break;
@@ -87,8 +86,6 @@ function startPrompt() {
 // viewEmployees();
 function viewEmployees () {
       console.log("Viewing all employees:\n");
-      // *View all employees*
-      //grab and display//id/ first_name/ last_name/ role/ department/ salary/ manager/ 
       var query = `
       SELECT e.id, e.first_name, e.last_name, r.title, d.name AS department, r.salary, CONCAT(m.first_name, ' ', m.last_name) AS manager
       FROM employee e
@@ -127,8 +124,6 @@ function viewDepartmentE() {
             departmentPrompt(departmentChoices);
       });
 }
-
-// ?Which department would you like to see employees for?
 function departmentPrompt(departmentChoices) {
     inquirer 
       .prompt ([
@@ -141,8 +136,6 @@ function departmentPrompt(departmentChoices) {
      ])
      .then ((answer) => {
             console.log(answer.departmentId);
-                //grab and display/
-            //id/ first_name/ last_name/department
             var query = `
             SELECT e.id, e.first_name, e.last_name, d.name AS department 
             FROM employee e
@@ -164,32 +157,8 @@ function departmentPrompt(departmentChoices) {
      });
 }
 
-
-// //NOT WORKING//
-// // (if)
-// //  viewRoles();
-// function viewRoles() {
-//       console.log("Viewing all roles:\n");
-//       // *View all roles*
-//       //id/ role
-//       var query = `SELECT * FROM roles`;
-
-//       connection.query(query, (err, res) => {
-//             if (err) throw err;
-//             console.table(res);
-//             console.log("\n-------------------Viewed-All-Roles-------------------------------");
-//             res.forEach((role) => {
-//                   console.log(
-//                         `ID: ${role.id} | Title: ${role.title}\n Salary: ${role.salary}\n`,
-//                   );
-//             });
-//             startPrompt();
-//       });
-// }
-
 // (if)
 //addEmployee();
-// *Add employee
 function addEmployee() {
       var query = ` SELECT r.id, r.title, r.salary
       FROM roles r`
@@ -209,7 +178,6 @@ function addEmployee() {
             addEmployeePrompt(employeeRoleChoices);
       });
 }
-
 function addEmployeePrompt (employeeRoleChoices) {
       inquirer 
         .prompt ([
@@ -280,7 +248,74 @@ function addDepartment() {
        });
 }
 
+// (if)
+//removeEmployee();
+function removeEmployee() {
+      var query = `SELECT e.id, e.first_name, e.last_name 
+      FROM employee e`
 
+      connection.query(query, (err, res) => {
+             if (err) throw err;
+                      
+            const removeEmployeeChoices = res.map(({ id, first_name, last_name }) => ({
+                  value: id, name: `${id} ${first_name} ${last_name}`
+            }));
+            console.table(res);
+            console.log("Choices");
+
+            removeEmployeePrompt(removeEmployeeChoices);
+
+      });
+}
+function removeEmployeePrompt (removeEmployeeChoices) {
+       inquirer 
+        .prompt ([
+         {
+           name: 'employeeId',
+           type: 'list',
+           message: "Which employee do you want to remove?",
+           choices: removeEmployeeChoices
+         }
+       ])
+
+       .then ((answer) => {
+              console.log(answer);
+  
+              var query = `DELETE FROM employee WHERE ?`
+              
+              connection.query(query, {id: answer.employeeId}, (err, res) => {
+            if (err)throw (err);
+
+            console.table(res);
+            console.log(res.insertedRows + "\n-------------------Removed-Employee-----------------------------");
+                  startPrompt();
+            }                                                  
+            );
+       });
+}
+
+
+// //FUTURE DEVELOPMENT//
+// // (if)
+// //  viewRoles();
+// function viewRoles() {
+//       console.log("Viewing all roles:\n");
+//       // *View all roles*
+//       //id/ role
+//       var query = `SELECT * FROM roles`;
+
+//       connection.query(query, (err, res) => {
+//             if (err) throw err;
+//             console.table(res);
+//             console.log("\n-------------------Viewed-All-Roles-------------------------------");
+//             res.forEach((role) => {
+//                   console.log(
+//                         `ID: ${role.id} | Title: ${role.title}\n Salary: ${role.salary}\n`,
+//                   );
+//             });
+//             startPrompt();
+//       });
+// }
 // (if)
 // //   //addRole();
 // function addRole() {
@@ -345,81 +380,29 @@ function addDepartment() {
 //        });
 //   } 
 
-
-
-
-// // message/Successfully Updated roles/message//
-
-
 // (if)
-// *Update Employee's role
-//updateEmployee();
-// ?which employees role do you want to update?
-      // [choices]
-// *Employee
-// *Employee
-// (etc)
-// ?Which role do you want to assign the selected employee?
-      // [choices]
-// *sales lead
-// *salesperson
-// *lead engineer
-// *Software engineer
-// *account manager
-// *accountant
-// *legal team lead
-// *lawyer
-// message/Successfully Updated employees role/message//
-
-
-
-// (if)
-//removeEmployee();
-function removeEmployee() {
-      var query = `SELECT e.id, e.first_name, e.last_name 
-      FROM employee e`
-
-      connection.query(query, (err, res) => {
-             if (err) throw err;
-                      
-            const removeEmployeeChoices = res.map(({ id, first_name, last_name }) => ({
-                  value: id, name: `${id} ${first_name} ${last_name}`
-            }));
-            console.table(res);
-            console.log("Choices");
-
-            removeEmployeePrompt(removeEmployeeChoices);
-
-      });
-}
-
-function removeEmployeePrompt (removeEmployeeChoices) {
-       inquirer 
-        .prompt ([
-         {
-           name: 'employeeId',
-           type: 'list',
-           message: "Which employee do you want to remove?",
-           choices: removeEmployeeChoices
-         }
-       ])
-
-       .then ((answer) => {
-              console.log(answer);
-  
-              var query = `DELETE FROM employee WHERE ?`
-              
-              connection.query(query, {id: answer.employeeId}, (err, res) => {
-            if (err)throw (err);
-
-            console.table(res);
-            console.log(res.insertedRows + "\n-------------------Removed-Employee-----------------------------");
-                  startPrompt();
-            }                                                  
-            );
-       });
-}
-
+// // *Update Employee's role
+// function updateEmployee() {
+//       inquirer 
+//             .prompt ([
+//                   {
+//                         name: 'role',
+//                         type: 'input',
+//                         message: "which employees role do you want to update?",
+//                   },
+//                   {
+//                          name: 'last_name',
+//                          type: 'input',
+//                          message: "what is the employees last name?",
+//                   },
+//                   {
+//                          name: 'role_id',
+//                          type: "list",
+//                          message: "What is the employees role?",
+//                          choices: employeeRoleChoices
+//                   },
+//             ])
+// }
 
 // (if)
  //removeRole();
@@ -435,16 +418,3 @@ function removeEmployeePrompt (removeEmployeeChoices) {
 // *lawyer
 // etc
 // // message/Successfully deleted role/message//
-
-
-                        // /EXAMPLE//
-            //  SELECT column_name(s)
-            // FROM table1
-            // LEFT JOIN table2
-            // ON table1.column_name = table2.column_name;
-
-      // SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate
-      // FROM Orders
-      // INNER JOIN Customers
-      // ON Orders.CustomerID=Customers.CustomerID;
-      // !!use mysql workbench to test sql statement before writing in javascript!!
