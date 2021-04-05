@@ -14,13 +14,18 @@ function startPrompt() {
       type: "list",
       message: "What would you like to do?",
       choices:[ 
+        //VIEW    
         "View all employees",
         "View all employees by department",
-        "Add employee",
-        "Remove employee",
         "View All Roles",
-        "Update employee role",
+        //ADD
+        "Add employee",
+        "Add department",
         "Add role",
+        //UPDATE
+        "Update employee role",
+        //REMOVE
+        "Remove employee",
         "Remove role",
         "Quit"
       ]  
@@ -29,43 +34,51 @@ function startPrompt() {
   .then ((res) => {
       // switch statement to select one of many code blocks to be executed.
       switch (res.start) {
-      // when view all employees 
+      // VIEW
        case "View all employees":
-       viewEmployees();
-       break;
+            viewEmployees();
+            break;
 
        case "View all employees by department":
-       viewDepartmentE();
-       break;
-
-       case "Add employee":
-       addEmployee();
-       break;
-
-       case "Remove employee":
-       removeEmployee();
-       break;
+            viewDepartmentE();
+            break;
 
        case "View all roles":
-       viewRoles();
-       break;
+            viewRoles();
+            break;
 
-       case "Update employee role":
-       updateEmployeeRole();
-       break;
+            //ADD
+       case "Add employee":
+            addEmployee();
+            break;
+
+       case "Add department":
+            addDepartment();
+            break;
 
        case "Add role":
-       addRole();
-       break;
+            addRole();
+            break;
+
+            //UPDATE
+       case "Update employee role":
+            updateEmployeeRole();
+            break;
+
+            //REMOVE
+       case "Remove employee":
+            removeEmployee();
+            break;
+
 
        case "remove role":
-       removeRole();
-       break;
+            removeRole();
+            break;
 
        case "Quit":
        console.log("Goodbye!");
        connection.end();
-       break;
+            break;
       }
   });
 }
@@ -98,13 +111,7 @@ function viewEmployees () {
  //viewDepartmentE();
 function viewDepartmentE() {
       var query = `
-      SELECT d.id, d.name, r.salary AS budget
-      FROM employee e
-      LEFT JOIN roles r
-      ON e.role_id = r.id
-      LEFT JOIN department d
-      ON d.id = r.department_id
-      GROUP BY d.id, d.name`
+      SELECT * FROM department`;
 
       connection.query(query, (err, res) => {
             if (err) throw err;
@@ -134,7 +141,7 @@ function departmentPrompt(departmentChoices) {
      ])
      .then ((answer) => {
             console.log(answer.departmentId);
-                //grab and diplay/
+                //grab and display/
             //id/ first_name/ last_name/department
             var query = `
             SELECT e.id, e.first_name, e.last_name, d.name AS department 
@@ -157,6 +164,29 @@ function departmentPrompt(departmentChoices) {
      });
 }
 
+
+// //NOT WORKING//
+// // (if)
+// //  viewRoles();
+// function viewRoles() {
+//       console.log("Viewing all roles:\n");
+//       // *View all roles*
+//       //id/ role
+//       var query = `SELECT * FROM roles`;
+
+//       connection.query(query, (err, res) => {
+//             if (err) throw err;
+//             console.table(res);
+//             console.log("\n-------------------Viewed-All-Roles-------------------------------");
+//             res.forEach((role) => {
+//                   console.log(
+//                         `ID: ${role.id} | Title: ${role.title}\n Salary: ${role.salary}\n`,
+//                   );
+//             });
+//             startPrompt();
+//       });
+// }
+
 // (if)
 //addEmployee();
 // *Add employee
@@ -174,7 +204,7 @@ function addEmployee() {
             }));
 
             console.table(res);
-            console.log("\n------------------Add--------------------------------");
+            console.log("\n------------------Add-New-Employee------------------------------");
             
             addEmployeePrompt(employeeRoleChoices);
       });
@@ -194,11 +224,12 @@ function addEmployeePrompt (employeeRoleChoices) {
             message: "what is the employees last name?",
           },
           {
-            name: 'manager_id',
+            name: 'role_id',
             type: "list",
             message: "What is the employees role?",
             choices: employeeRoleChoices
-          } 
+          },
+          
        ])
 
        .then ((answer) => {
@@ -211,18 +242,94 @@ function addEmployeePrompt (employeeRoleChoices) {
                     first_name: answer.first_name,
                     last_name: answer.last_name,
                     role_id: answer.role_id,
-                    manager_id: answer.managerId,
                   },
                   (err, res) => {
                    if (err) throw (err);
 
                    console.table(res);
-                   console.log(res.insertedRows + "\n-------------------Added-New-Employee------------------------------");
+                   console.log(res.insertedRows + "\n-------------------Added-New-Employee!------------------------------");
                    viewEmployees();
                   }                                      
             );
        });
 }
+
+function addDepartment() {
+      inquirer 
+        .prompt ([
+         {
+           name: 'newDepartment',
+           type: 'input',
+           message: "What is the new Departments title?",
+         },
+       ])
+
+       .then ((answer) => {
+            var query = ` INSERT INTO department SET ?`
+              connection.query(query, 
+                  {
+                        name: answer.newDepartment
+                  },
+                  (err, res) => {
+                   if (err) throw (err);
+                   console.table(res);
+                   console.log("-------------------Added-New-Department!------------------------------");
+                   startPrompt();
+                  }                                      
+            );
+       });
+}
+
+
+// (if)
+  //addRole();
+  function addRole() {
+      inquirer
+       .prompt ([
+             {
+                  name: 'newRole',
+                  type: 'input',
+                  message: "Which role do you want to add?",
+             },
+             {
+                  name: 'roleSalary',
+                  type: 'input',
+                  message: "What is the yearly salary for this role?",
+             },
+             {
+                  name: 'roleDepartment',
+                  type: 'input',
+                 choices: departmentChoices,
+             },
+
+             
+       ])
+  } 
+
+// // message/Successfully Updated roles/message//
+
+
+// (if)
+// *Update Employee's role
+//updateEmployee();
+// ?which employees role do you want to update?
+      // [choices]
+// *Employee
+// *Employee
+// (etc)
+// ?Which role do you want to assign the selected employee?
+      // [choices]
+// *sales lead
+// *salesperson
+// *lead engineer
+// *Software engineer
+// *account manager
+// *accountant
+// *legal team lead
+// *lawyer
+// message/Successfully Updated employees role/message//
+
+
 
 // (if)
 //removeEmployee();
@@ -273,29 +380,19 @@ function removeEmployeePrompt (removeEmployeeChoices) {
 
 
 // (if)
-//  viewRoles();
-function viewRoles() {
-      console.log("Viewing all roles:\n");
-      // *View all roles*
-      //id/ role
-      var query = `SELECT * FROM roles`
-
-      connection.query(query, (err, res) => {
-            if (err) throw err;
-            console.table(res);
-            
-            res.forEach((role) => {
-                  console.log(`ID: ${role.id} Role: ${role.title}\n`,
-            );
-            });
-            console.log("\n-------------------Viewed-All-Roles-------------------------------");
-            startPrompt();
-      });
-}
-
-//grab and display
-//id/ role
-
+ //removeRole();
+// ?Which role do you want to remove (warning: this will also remove employees)?
+      // [choices]
+// *sales lead
+// *salesperson
+// *lead engineer
+// *Software engineer
+// *account manager
+// *accountant
+// *legal team lead
+// *lawyer
+// etc
+// // message/Successfully deleted role/message//
 
 
                         // /EXAMPLE//
@@ -310,68 +407,8 @@ function viewRoles() {
       // ON Orders.CustomerID=Customers.CustomerID;
       // !!use mysql workbench to test sql statement before writing in javascript!!
 
-// (if)
-// *Update Employee's role
-//updateEmployee();
-// ?which employees role do you want to update?
-      // [choices]
-// *Employee
-// *Employee
-// (etc)
-// ?Which role do you want to assign the selected employee?
-      // [choices]
-// *sales lead
-// *salesperson
-// *lead engineer
-// *Software engineer
-// *account manager
-// *accountant
-// *legal team lead
-// *lawyer
-// message/Successfully Updated employees role/message//
 
 
-// (if)
- //updateManager();
-// *Update employee manager
-// ?which employees manager do you want to update?
-      // [choices]
-// *Employee
-// *Employee
-// (etc)
-// ?Which manager do you want to assign the selected employee?
-      // [choices]
-// *Manager 
-// *manager 
-// *etc
-// // message/Successfully Updated employees manager/message//
-
-
-// (if)
-  //addRole();
-// *Add role 
-// // ?Which role do you want to add?
-      // [input]
-// ?What is the yearly salary for this role?
-      // [input]
-// ?What department is this new role under?
-      // [input]
-// // message/Successfully Updated roles/message//
-
-// (if)
- //removeRole();
-// ?Which role do you want to remove (warning: this will also remove employees)?
-      // [choices]
-// *sales lead
-// *salesperson
-// *lead engineer
-// *Software engineer
-// *account manager
-// *accountant
-// *legal team lead
-// *lawyer
-// etc
-// // message/Successfully deleted role/message//
 
 // (if)
 // quit 
