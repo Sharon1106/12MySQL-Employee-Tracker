@@ -1,7 +1,7 @@
 # Employee Tracker   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Description
-a solution for managing a company's employees using node, inquirer, and MySQL.
+A solution for managing a company's employees using node, inquirer, and MySQL.
 A simple node.js application ran from the terminal used to keep track of employees.
 With this app you're are able to view and manage your department, roles and employees. 
 
