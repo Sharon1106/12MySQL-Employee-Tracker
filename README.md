@@ -2,7 +2,7 @@
 
 ## Description
 a solution for managing a company's employees using node, inquirer, and MySQL.
-A simple node.js application ran from the terminal used to keep track of employees in a company.
+A simple node.js application ran from the terminal used to keep track of employees.
 With this app you're are able to view and manage your department, roles and employees. 
 
 ## User Story
@@ -24,7 +24,7 @@ So that I can organize and plan my business
   
 ## Installation
 
-  Installation instructions: Once repo is cloned, run npm install. Then node runApp.js.
+  Installation instructions: Once repo is cloned, run npm install. Then `node runApp.js`.
   
 ## Usage
 
@@ -33,14 +33,6 @@ So that I can organize and plan my business
 ## Built with
 
 Javascript | node.Js | inquirer | mySql | console.table | nodemon
-
-## Issues
-
-Issues: I had issues with the roles table to display and manipulate. In MySql, the tables and columns work as expected but when inserted in js file there are problems.
-
-## License
-
-  This project is licensed under: MIT | https://opensource.org/licenses/MIT
   
 ### Questions?
 
