@@ -13,18 +13,9 @@ I want to be able to view and manage the departments, roles, and employees in my
 So that I can organize and plan my business
 ```
 
-## Table of Contents
-
-* [Installation](#Installation)
-* [Usage](#Usage)
-* [Built with](#Built-with)
-* [Issues](#Issues)
-* [License](#License)
-* [Questions](#Questions)
-  
 ## Installation
 
-  Installation instructions: Once repo is cloned, run npm install. Then `node runApp.js`.
+  Installation instructions: Once repo is cloned, run `npm install` -> `node runApp.js`
   
 ## Usage
 
@@ -33,8 +24,3 @@ So that I can organize and plan my business
 ## Built with
 
 Javascript | node.Js | inquirer | mySql | console.table | nodemon
-  
-### Questions?
-
-  You can visit: [GitHub](https://github.com/Sharon1106)  
-  For any additional questions you can contact me at martinezsharonr@gmail.com
